@@ -2,7 +2,6 @@
 " Todos os créditos a sua equipe de desenvolvimento https://vim-bootstrap.com/
 
 
-
 let vimplug_exists=expand('~/.config/nvim/autoload/plug.vim')
 let curl_exists=expand('curl')
 
@@ -25,6 +24,18 @@ endif
 " ----------------------------------------------------------------------------
 
 call plug#begin(expand('~/.config/nvim/plugged'))
+Plug 'kien/ctrlp.vim'
+Plug 'tpope/vim-commentary'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'raimondi/delimitmate'
+
+Plug 'morhetz/gruvbox'
+
+Plug 'dense-analysis/ale'
+Plug 'vim-syntastic/syntastic'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+Plug 'mattn/emmet-vim'
 call plug#end()
 
 filetype plugin indent on
@@ -49,11 +60,18 @@ set hlsearch
 set incsearch
 set ignorecase
 set smartcase
+set nowrap
+set splitright
+set splitbelow
+
 
 " Configurações visuais
 " ----------------------------------------------------------------------------
 
 syntax on
+
+let g:gruvbox_transparent_bg=1
+colorscheme gruvbox
 
 set ruler
 set number
@@ -68,7 +86,7 @@ set modelines=10
 set title
 set titleold="Terminal"
 set titlestring=%F
-set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\ 
+set statusline=%F%m%r%h%w%=%{&ff}/%Y\ line:\ %l:%L,\ col:\ %c\ 
 
 " Mapeamentos
 " ----------------------------------------------------------------------------
@@ -91,6 +109,8 @@ command! FixWhitespace :%s/\s\+$//e
 
 "
 " ----------------------------------------------------------------------------
+
+autocmd VimEnter * hi Normal ctermbg=NONE guibg=NONE
 
 augroup vimrc-sync-fromstart
   autocmd!
@@ -131,3 +151,4 @@ noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 noremap <C-h> <C-w>h
 
+source ~/.config/nvim/coc.vim
