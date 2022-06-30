@@ -29,6 +29,18 @@ if !filereadable(vimplug_exists)
 endif
 
 call plug#begin(expand('~/.config/nvim/plugged'))
+Plug 'kien/ctrlp.vim'
+Plug 'tpope/vim-commentary'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'raimondi/delimitmate'
+
+Plug 'dense-analysis/ale'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+Plug 'morhetz/gruvbox'
+Plug 'luochen1990/rainbow'
+
+Plug 'mattn/emmet-vim'
 call plug#end()
 
 filetype plugin indent on
@@ -41,6 +53,7 @@ set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8
 set backspace=indent,eol,start
+set nowrap
 set tabstop=4
 set softtabstop=0
 set shiftwidth=4
@@ -64,12 +77,26 @@ endif
 " Visual
 " ----------------------------------------------------------------------------
 
+if (empty($TMUX))
+  if (has("nvim"))
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+endif
+
+colorscheme gruvbox
+let g:gruvbox_italic=1
+let g:gruvbox_transparent_bg=1
+
+let g:rainbow_active = 1
+
 syntax on
 set ruler
 set number
 set splitright
 set splitbelow
-colorscheme desert
 set wildmenu
 au TermEnter * setlocal scrolloff=0
 au TermLeave * setlocal scrolloff=3
@@ -111,6 +138,8 @@ augroup vimrc-remember-cursor-position
   autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 augroup END
 
+autocmd VimEnter * hi Normal ctermbg=None guibg=None
+
 set autoread
 
 noremap <Leader>h :<C-u>split<CR>
@@ -132,3 +161,5 @@ noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 noremap <C-h> <C-w>h
+
+source ~/.config/nvim/coc.vim
